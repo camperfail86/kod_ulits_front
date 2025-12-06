@@ -8,22 +8,22 @@ import { LocalAuthClient } from "./auth/localAuthClient"
 import { ApiAuthClient } from "./auth/apiAuthClient"
 
 const useLocal =
-    process.env.REACT_APP_USE_LOCAL_AUTH === "true" ||
-    !process.env.REACT_APP_API_BASE_URL
+  process.env.REACT_APP_USE_LOCAL_AUTH === "true" ||
+  !process.env.REACT_APP_API_BASE_URL
 
 const authClient = useLocal
-    ? new LocalAuthClient()
-    : new ApiAuthClient(process.env.REACT_APP_API_BASE_URL || "")
+  ? new LocalAuthClient()
+  : new ApiAuthClient(process.env.REACT_APP_API_BASE_URL || "")
 
 const container = document.getElementById("root") as HTMLElement
 const root = ReactDOM.createRoot(container)
 
 root.render(
-    <React.StrictMode>
-        <AuthProvider client={authClient}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </AuthProvider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider client={authClient}>
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 )

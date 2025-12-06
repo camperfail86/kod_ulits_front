@@ -1,0 +1,95 @@
+/* quest-review.css */
+.quest-review {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #ffffff;
+    font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    system-ui, sans-serif;
+}
+
+.quest-review__inner {
+    width: 100%;
+    max-width: 510px;
+    padding: 60px 0 60px;
+    text-align: center;
+}
+
+.quest-review__title {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 14px;
+    vertical-align: middle;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.quest-review__heart-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.quest-review__heart {
+    width: 220px;
+    height: 220px;
+}
+
+.quest-review__text {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 14px;
+    vertical-align: middle;
+    margin-bottom: 26px;
+    text-align: left;
+    width: 356px;
+}
+
+.quest-review__input-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.quest-review__input {
+    max-width: 520px;
+    padding: 18px 28px;
+    border-radius: 12px;
+    border: 1px solid #000000;
+    opacity: 0.5;
+    font-size: 20px;
+    outline: none;
+    width: 300px;
+    box-sizing: content-box;
+}
+
+.quest-review__input::placeholder {
+    color: black;
+}
+
+.quest-review__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    padding: 18px 28px;
+    border-radius: 12px;
+    border: none;
+    background: #111111;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+.quest-review__text-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

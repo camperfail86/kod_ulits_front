@@ -1,6 +1,7 @@
 import "./style.css"
 import {FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
+import kod from "../../assets/Код улиц.png";
 
 export function ForgotPassword() {
     const [email, setEmail] = useState("")
@@ -11,6 +12,7 @@ export function ForgotPassword() {
 
     return (
         <div className="form-group_fp">
+            <img className="form-group_fp-image" src={kod} alt="" />
             <h2 className="form-group_fp-title">Сброс пароля</h2>
             <div className="form-group_fp-description">Введите ваш электронный адрес и мы вышлем вам инструкции по получению нового пароля.</div>
             <form className="form" onSubmit={handleSubmit}>
@@ -18,7 +20,7 @@ export function ForgotPassword() {
                     <label className="label_fp">E-mail
                         <input
                             placeholder="Введите ваш электронный адрес"
-                            className={"form_input_email"}
+                            className={"form_input_email_forgot_password"}
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             type="email"

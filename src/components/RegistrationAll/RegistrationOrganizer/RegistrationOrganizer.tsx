@@ -70,7 +70,7 @@ const RegistrationOrganizer = () => {
                                     className={error ? "form_input_password_error" : "form_input_password"}
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                 />
                                 <button
                                     type="button"
