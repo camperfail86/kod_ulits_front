@@ -30,7 +30,7 @@ function App() {
             </nav>
 
             <Routes>
-                <Route path="/start" element={<Start/>} />
+                <Route path="/" element={<Start/>} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/registration" element={<Registration />} />

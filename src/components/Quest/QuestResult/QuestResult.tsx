@@ -1,5 +1,3 @@
-// QuestResult.tsx
-import React from "react"
 import "./style.css"
 
 type QuestResultProps = {
@@ -7,7 +5,7 @@ type QuestResultProps = {
   onNext: () => void
 }
 
-const QuestResult: React.FC<QuestResultProps> = ({ time, onNext }) => {
+const QuestResult = ({ time, onNext }: QuestResultProps) => {
   return (
     <div className="quest-result">
       <div className="quest-result__inner">
@@ -21,10 +19,7 @@ const QuestResult: React.FC<QuestResultProps> = ({ time, onNext }) => {
           </div>
         </div>
 
-        <button
-          className="quest-result__button"
-          onClick={onNext}
-        >
+        <button className="quest-result__button" onClick={onNext}>
           Оценить квест
         </button>
       </div>

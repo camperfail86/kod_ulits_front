@@ -1,46 +1,53 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./style.css"
 import user from "../../../assets/person.svg"
 import user_l from "../../../assets/user_light.svg"
 import stg from "../../../assets/settings.svg"
 import exit from "../../../assets/logout.svg"
 import { useNavigate } from "react-router-dom"
-import { Quest } from "../../Quest/questTypes";
+import { Quest } from "../../Quest/questTypes"
 
-const MOCK_QUESTS: Quest[] = [
-  {
-    id: "1",
-    title: "Ночной Петербург",
-    description: "Квест по самым атмосферным местам города.",
-    location: "Санкт-Петербург",
-    difficulty: "Средний",
-    duration: 90,
-    price: "1200 ₽",
-  },
-  {
-    id: "2",
-    title: "Код Васильевского острова",
-    description: "Маршрут по набережным и скрытым дворикам.",
-    location: "В.О.",
-    difficulty: "Лёгкий",
-    duration: 60,
-    price: "900 ₽",
-  },
-  {
-    id: "3",
-    title: "Тайна стрелки",
-    description: "История Ростральных колонн и окрестностей.",
-    location: "Стрелка ВО",
-    difficulty: "Сложный",
-    duration: 120,
-    price: "1500 ₽",
-  },
-]
+const API_BASE = process.env.REACT_APP_API_BASE_URL || "http://127.0.0.1:8080"
 
 const ProfilePage = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [index, setIndex] = useState(0)
+  const [quests, setQuests] = useState<Quest[]>([])
+  const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setError(null)
+        const res = await fetch(`${API_BASE}/api/get_quests`)
+        const json = await res.json()
+
+        if (!res.ok || json.success === false) {
+          throw new Error(json.message || "Не удалось загрузить квесты")
+        }
+
+        const searching = json.searching_quests || []
+
+        const mapped: Quest[] = searching.map((q: any) => ({
+          id: String(q.game_id),
+          title: q.title,
+          // ВАЖНО: бэк присылает dascription
+          description: q.dascription ?? q.description ?? "",
+          location: q.location || "",
+          difficulty: q.difficulty || "",
+          duration: q.duration || 0,
+          price: "0 ₽", // пока цены нет в апи, можно захардкодить/посчитать
+        }))
+
+        setQuests(mapped)
+      } catch (e: any) {
+        setError(e.message || "Ошибка загрузки квестов")
+      }
+    }
+
+    load()
+  }, [])
 
   const handleLogout = async () => {
     setMenuOpen(false)
@@ -48,28 +55,25 @@ const ProfilePage = () => {
   }
 
   const handleNext = () => {
-    if (MOCK_QUESTS.length <= 2) return
+    if (quests.length <= 2) return
     setIndex(prev => {
       const next = prev + 2
-      return next >= MOCK_QUESTS.length ? 0 : next
+      return next >= quests.length ? 0 : next
     })
   }
 
   const handlePrev = () => {
-    if (MOCK_QUESTS.length <= 2) return
+    if (quests.length <= 2) return
     setIndex(prev => {
       const next = prev - 2
-      return next < 0 ? Math.max(MOCK_QUESTS.length - 2, 0) : next
+      return next < 0 ? Math.max(quests.length - 2, 0) : next
     })
   }
 
   const visibleQuests =
-    MOCK_QUESTS.length <= 2
-      ? MOCK_QUESTS
-      : MOCK_QUESTS.slice(index, index + 2)
+    quests.length <= 2 ? quests : quests.slice(index, index + 2)
 
   const handleStartQuest = (q: Quest) => {
-    // navigate(`/game/${q.id}`)
     navigate(`/quest/${q.id}`, { state: { quest: q } })
   }
 
@@ -136,6 +140,8 @@ const ProfilePage = () => {
 
         <div className="profile-content">
           <h2 className="profile-title">Рекомендованные квесты</h2>
+
+          {error && <div className="profile-error">{error}</div>}
 
           <div className="profile-carousel">
             <button

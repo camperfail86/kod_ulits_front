@@ -10,7 +10,7 @@ export const gameSessionMockTasks = {
   questions_id_list: [
     {
       bool_hint: false,
-      description: "question2_moscow",
+      description: "mock",
       game_id: "2",
       hint: null,
       id: "4",
@@ -21,7 +21,7 @@ export const gameSessionMockTasks = {
     },
     {
       bool_hint: false,
-      description: "question1_moscow",
+      description: "mock",
       game_id: "2",
       hint: null,
       id: "3",
@@ -32,7 +32,7 @@ export const gameSessionMockTasks = {
     },
     {
       bool_hint: true,
-      description: "question3_moscow",
+      description: "mock",
       game_id: "2",
       hint: "bla-bla-bla",
       id: "5",

@@ -45,7 +45,7 @@ const QuestReview: React.FC<QuestReviewProps> = ({
         </div>
 
         <div className="quest-review__score">
-          Итоговый счёт: {score} баллов
+          {/*Итоговый счёт: {score} баллов*/}
         </div>
 
         <div className="quest-review__text-wrapper">
