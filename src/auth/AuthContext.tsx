@@ -25,20 +25,23 @@ export function AuthProvider({ client, children }: AuthProviderProps) {
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        let active = true
-        client
-            .getCurrentUser()
-            .then(u => {
-                if (active) setUser(u)
-            })
-            .finally(() => {
-                if (active) setLoading(false)
-            })
-        return () => {
-            active = false
-        }
-    }, [client])
+  useEffect(() => {
+    let active = true
+    client
+      .getCurrentUser()
+      .then(u => {
+        if (active) setUser(u)
+      })
+      .catch(err => {
+        console.error("getCurrentUser error:", err)
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [client])
 
     const handleLogin = async (email: string, password: string) => {
         const u = await client.login(email, password)

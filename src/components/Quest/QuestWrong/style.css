@@ -1,0 +1,108 @@
+.quest-wrong {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 32px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.quest-wrong__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.quest-wrong__icon-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.quest-wrong__icon-bg {
+    width: 220px;
+    height: 220px;
+    border-radius: 48px;
+    background: #e3e3e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quest-wrong__icon {
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.quest-wrong__text {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 14px;
+    vertical-align: middle;
+    max-width: 420px;
+    margin: 16px auto;
+    font-size: 18px;
+    color: black;
+    opacity: 0.5;
+    text-align: left;
+    width: 340px;
+}
+
+/* форма с ответом и подсказкой */
+
+.quest-wrong__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+/* параметры как в task-answer__input */
+
+.quest-wrong__input {
+    width: 340px;
+    height: 54px;
+    padding: 0 32px;
+    border-radius: 12px;
+    border: 1px solid #000;
+    font-size: 16px;
+    line-height: 1;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* кнопка как task-answer__submit */
+
+.quest-wrong__submit {
+    width: 340px;
+    height: 54px;
+    border-radius: 12px;
+    border: none;
+    background: #111111;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* кнопка подсказки как task-answer__hint */
+
+.quest-wrong__hint {
+    width: 340px;
+    height: 54px;
+    border-radius: 12px;
+    background: #d9d9d9;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #000000;
+    cursor: pointer;
+}
+
+.quest-wrong__hint:disabled {
+    opacity: 0.7;
+    cursor: default;
+}

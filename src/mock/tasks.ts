@@ -1,6 +1,6 @@
 export const gameSessionMockTasks = {
   game_session: {
-    hints: 0,
+    hints: 1,
     id: "b7fd8b68-f3cf-4949-a47a-e025d078d50b",
     registration_id: "b68e07fc-c731-4320-a6d3-dd3283ce7417",
     score: 0,

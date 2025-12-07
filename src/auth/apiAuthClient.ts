@@ -1,34 +1,58 @@
 import { AuthClient, User } from "./types"
 
 export class ApiAuthClient implements AuthClient {
-    constructor(private baseUrl: string) {}
+  private baseUrl: string
 
-    async login(email: string, password: string): Promise<User> {
-        const res = await fetch(`${this.baseUrl}/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-            credentials: "include",
-        })
-        if (!res.ok) throw new Error("Неверный логин или пароль")
-        const data = await res.json()
-        return data.user as User
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl.replace(/\/+$/, "")
+  }
+
+  private saveTokens(data: any) {
+    if (!data || !data.tokens) return
+    const tokens = data.tokens
+    if (tokens.access_token) {
+      localStorage.setItem("access_token", tokens.access_token)
+    }
+    if (tokens.refresh_token) {
+      localStorage.setItem("refresh_token", tokens.refresh_token)
+    }
+  }
+
+  async login(email: string, password: string): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+
+    const json = await res.json()
+
+    if (!res.ok || json.success === false) {
+      throw new Error(json.message || "Ошибка входа")
     }
 
-    async logout(): Promise<void> {
-        await fetch(`${this.baseUrl}/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-        })
-    }
+    const data = json.data
+    this.saveTokens(data)
+    const user = data.user as User
+    localStorage.setItem("user", JSON.stringify(user))
+    return user
+  }
 
-    async getCurrentUser(): Promise<User | null> {
-        const res = await fetch(`${this.baseUrl}/auth/me`, {
-            method: "GET",
-            credentials: "include",
-        })
-        if (!res.ok) return null
-        const data = await res.json()
-        return data.user as User
+  async getCurrentUser(): Promise<User | null> {
+    const raw = localStorage.getItem("user")
+    if (!raw) return null
+    try {
+      const user = JSON.parse(raw) as User
+      return user
+    } catch {
+      localStorage.removeItem("user")
+      return null
     }
+  }
+
+  async logout(): Promise<void> {
+    localStorage.removeItem("user")
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+  }
 }

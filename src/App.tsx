@@ -22,12 +22,11 @@ function App() {
     return (
         <div>
             <nav>
-                <Link to="/login">Вход</Link>{" | "}
-                <Link to="/quest-task">Задача</Link>{" | "}
-                <Link to="/quest-result">Результат квеста</Link>{" | "}
-                <Link to="/quest-review">Оставьте отзыв</Link>{" | "}
-                <Link to="/quest-intro">Прохождение квеста</Link>
-                {user && <span style={{ marginLeft: 8 }}>({user.email})</span>}
+                {/*<Link to="/login">Вход</Link>{" | "}*/}
+                {/*<Link to="/quest-task">Задача</Link>{" | "}*/}
+                {/*<Link to="/quest-result">Результат квеста</Link>{" | "}*/}
+                {/*<Link to="/quest-review">Оставьте отзыв</Link>{" | "}*/}
+                {/*<Link to="/quest-intro">Прохождение квеста</Link>*/}
             </nav>
 
             <Routes>
@@ -38,12 +37,14 @@ function App() {
                 <Route path="/registration-organizer" element={<RegistrationOrganizer/>}></Route>
                 <Route path="/registration-player" element={<RegistrationPLayer/>}></Route>
                 <Route path="/quest-intro" element={<QuestIntroPage/>}></Route>
-                <Route path="/quest-completed" element={<QuestCompleted/>}></Route>
-                <Route path="/quest-task" element={<QuestTask />} />
+                {/*<Route path="/quest-completed" element={<QuestCompleted/>}></Route>*/}
+                {/*<Route path="/quest-task" element={<QuestTask />} />*/}
                 <Route path="/quest-flow" element={<QuestFlow />} />
-                <Route path="/quest-result" element={<QuestResult />} />
-                <Route path="/quest-review" element={<QuestReview/>} />
-                <Route path="/quest-correct" element={<QuestCorrect />} />
+                {/*<Route path="/quest-result" element={<QuestResult />} />*/}
+                {/*<Route path="/quest-review" element={<QuestReview/>} />*/}
+                {/*<Route path="/quest-correct" element={<QuestCorrect />} />*/}
+                <Route path="/quest/:id" element={<QuestIntroPage />} />
+                <Route path="/quest/:id/flow" element={<QuestFlow />} />
                 <Route
                     path="/profile"
                     element={

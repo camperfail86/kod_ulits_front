@@ -1,9 +1,13 @@
-// QuestResult.jsx
-import React from "react";
-import "./style.css";
+// QuestResult.tsx
+import React from "react"
+import "./style.css"
 
-const QuestResult = ({ time } : any) => {
-  time = "58:00" // хардкод
+type QuestResultProps = {
+  time: string
+  onNext: () => void
+}
+
+const QuestResult: React.FC<QuestResultProps> = ({ time, onNext }) => {
   return (
     <div className="quest-result">
       <div className="quest-result__inner">
@@ -17,10 +21,15 @@ const QuestResult = ({ time } : any) => {
           </div>
         </div>
 
-        <button className="quest-result__button">Оценить квест</button>
+        <button
+          className="quest-result__button"
+          onClick={onNext}
+        >
+          Оценить квест
+        </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default QuestResult;
+export default QuestResult

@@ -1,8 +1,5 @@
 import "./style.css"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { gameSessionMock } from "../../../mock/mock"
-import { gameSessionMockTasks } from "../../../mock/tasks"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 
 export type Quest = {
   avatar: string | null
@@ -32,69 +29,33 @@ export type Question = {
   title: string
 }
 
-export type GameSessionResponse = {
-  game_session: {
-    hints: number
-    id: string
-    registration_id: string
-    score: number
-    start_datetime: string
-    status: string
-  }
-  questions_id_list: Question[]
+export type GameSession = {
+  hints: number
+  id: string
+  registration_id: string
+  score: number
+  start_datetime: string
   status: string
 }
 
-export function fetchQuests(): Promise<Quest[]> {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(gameSessionMock.quest)
-    }, 300)
-  })
-}
-
-export function fetchQuestsTasks(): Promise<GameSessionResponse> {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(gameSessionMockTasks)
-    }, 300)
-  })
+type LocationState = {
+  quest?: Quest
+  questions?: Question[]
+  gameSession?: GameSession
 }
 
 function QuestIntroPage() {
-  const [quest, setQuest] = useState<Quest | null>(null)
-  const [questions, setQuestions] = useState<Question[] | null>(null)
-  const [gameSession, setGameSession] =
-    useState<GameSessionResponse["game_session"] | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { quest, questions, gameSession } = (location.state || {}) as LocationState
 
-  useEffect(() => {
-    Promise.all([fetchQuests(), fetchQuestsTasks()])
-      .then(([questsList, tasksResponse]) => {
-        setQuest(questsList[0])
-        setQuestions(tasksResponse.questions_id_list)
-        setGameSession(tasksResponse.game_session)
-      })
-      .catch(e => {
-        setError(e as Error)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [])
-
-  if (isLoading) {
-    return <div className="quest">Загрузка квеста...</div>
-  }
-
-  if (error || !quest || !questions || !gameSession) {
-    return <div className="quest">Ошибка загрузки квеста</div>
+  if (!quest) {
+    return <div className="quest">Квест не найден или данные не переданы</div>
   }
 
   const handleStart = () => {
-    navigate("/quest-flow", {
+    navigate(`/quest/${id}/flow`, {
       state: {
         quest,
         questions,
@@ -103,13 +64,22 @@ function QuestIntroPage() {
     })
   }
 
+  const imageUrl =
+    quest.avatar ||
+    (Array.isArray(questions) && questions[0]?.image_url) ||
+    null
+
   return (
     <div className="quest">
       <div className="quest__inner">
         <h1 className="quest__title">{quest.title}</h1>
 
         <div className="quest__image-wrapper">
-          <div className="quest__image-placeholder" />
+          {imageUrl ? (
+            <img src={imageUrl} alt={quest.title} className="quest__image" />
+          ) : (
+            <div className="quest__image-placeholder" />
+          )}
         </div>
 
         <div className="quest__image-caption__wrapper">
@@ -119,13 +89,6 @@ function QuestIntroPage() {
         <section className="quest__section">
           <h2 className="quest__section-title">Описание квеста</h2>
           <p className="quest__text">{quest.description}</p>
-        </section>
-
-        <section className="quest__section">
-          <h2 className="quest__section-title">Район проведения квеста</h2>
-          <div className="quest__map-wrapper">
-            <div className="quest__map-placeholder" />
-          </div>
         </section>
 
         <div className="quest__button-wrapper">

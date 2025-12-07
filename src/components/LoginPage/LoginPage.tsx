@@ -15,7 +15,6 @@ export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   if (loading) return <div>Загрузка...</div>
-  if (user) return <div>Вы уже вошли как {user.email}</div>
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
