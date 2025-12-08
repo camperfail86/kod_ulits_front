@@ -14,12 +14,49 @@ const RegistrationPLayer = () => {
   console.log("API:", process.env.REACT_APP_API_BASE_URL)
   const navigate = useNavigate()
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const dateRegex = /^(\d{2})\.(\d{2})\.(\d{4})$/
+
+  const isValidDateOfBirth = (value: string) => {
+    const match = value.match(dateRegex)
+    if (!match) return false
+
+    const day = Number(match[1])
+    const month = Number(match[2])
+    const year = Number(match[3])
+
+    const date = new Date(year, month - 1, day)
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      return false
+    }
+
+    const today = new Date()
+    if (date > today) return false
+    if (year < 1900) return false
+
+    return true
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setError(null)
 
     if (!name || !email || !password) {
       setError("*Заполните все поля")
+      return
+    }
+
+    if (!emailRegex.test(email)) {
+      setError("*Введите корректный E-mail")
+      return
+    }
+
+    if (!isValidDateOfBirth(dateOfBirth)) {
+      setError("*Введите корректную дату рождения - ДД.ММ.ГГГГ")
       return
     }
 

@@ -29,7 +29,6 @@ const QuestCorrect: React.FC<QuestCorrectProps> = ({
 
         <div className="quest-correct__subtitle">
           Вы отлично справились с загадкой «{question.title}». <br />
-          {/*Текущий счёт: {score} баллов.*/}
         </div>
 
         <button className="quest-correct__button" onClick={onNext}>
