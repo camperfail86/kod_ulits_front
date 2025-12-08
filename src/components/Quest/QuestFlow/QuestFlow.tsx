@@ -65,71 +65,10 @@ const QuestFlow = () => {
 
   const handleUseHint = () => {
     if (!currentQuestion.bool_hint || hintsLeft <= 0) return
-    // локально уменьшаем, бек потом тоже может это учитывать
     setHintsLeft(prev => prev - 1)
     setUsedHint(true)
     setScreen("hint")
   }
-
-  // const handleSubmitAnswer = async (answer: string) => {
-  //   const trimmed = answer.trim()
-  //   if (!trimmed) {
-  //     setScreen("wrong")
-  //     return
-  //   }
-  //
-  //   setAnswerLoading(true)
-  //
-  //   try {
-  //     const res = await fetch(`${API_BASE}/api/check_answer`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         answer: trimmed,
-  //         game_session_id: gameSession.id,
-  //         question_id: currentQuestion.id,
-  //       }),
-  //     })
-  //
-  //     const data = await res.json()
-  //     console.log("check_answer response:", data)
-  //
-  //     // если бэк вернул ошибку
-  //     if (!res.ok || data.success === false) {
-  //       console.error("check_answer error:", data)
-  //       setScreen("wrong")
-  //       return
-  //     }
-  //
-  //     // по спецификации бэка:
-  //     // finished: { status, game_status: 'finished', total_score, hints, ... }
-  //     // active:   { status, game_status: 'active', total_score, hints, correct, question_score, ... }
-  //
-  //     if (typeof data.total_score === "number") {
-  //       setScore(data.total_score)
-  //     }
-  //     if (typeof data.hints === "number") {
-  //       setHintsLeft(data.hints)
-  //     }
-  //
-  //     if (data.game_status === "finished") {
-  //       setFinishTime(elapsedSeconds)
-  //       setScreen("result")
-  //       return
-  //     }
-  //
-  //     if (data.correct) {
-  //       setScreen("correct")
-  //     } else {
-  //       setScreen("wrong")
-  //     }
-  //   } catch (e) {
-  //     console.error("Ошибка /api/check_answer:", e)
-  //     setScreen("wrong")
-  //   } finally {
-  //     setAnswerLoading(false)
-  //   }
-  // }
 
   const handleSubmitAnswer = async (answer: string) => {
     const trimmed = answer.trim()
@@ -215,8 +154,6 @@ const QuestFlow = () => {
           hintsLeft={hintsLeft}
           onUseHint={handleUseHint}
           onSubmitAnswer={handleSubmitAnswer}
-          // если в пропах QuestTask нет loading — просто убери эту строку
-          // loading={answerLoading}
         />
       )}
 

@@ -32,12 +32,11 @@ const ProfilePage = () => {
         const mapped: Quest[] = searching.map((q: any) => ({
           id: String(q.game_id),
           title: q.title,
-          // ВАЖНО: бэк присылает dascription
           description: q.dascription ?? q.description ?? "",
           location: q.location || "",
           difficulty: q.difficulty || "",
           duration: q.duration || 0,
-          price: "0 ₽", // пока цены нет в апи, можно захардкодить/посчитать
+          price: "0 ₽",
         }))
 
         setQuests(mapped)
@@ -158,7 +157,17 @@ const ProfilePage = () => {
                   key={q.id}
                   onClick={() => handleStartQuest(q)}
                 >
-                  <div className="profile-card-image">Картинка квеста</div>
+                  <div className="profile-card-image">
+                    {q.avatar_url || q.avatar ? (
+                      <img
+                        src={q.avatar_url || q.avatar || ""}
+                        alt={q.title}
+                        className="profile-card-image-img"
+                      />
+                    ) : (
+                      "Картинка квеста"
+                    )}
+                  </div>
                   <div className="profile-card-body">
                     <div className="profile-card-title">{q.title}</div>
                     <div className="profile-card-description">

@@ -17,6 +17,7 @@ export type Quest = {
   start_datetime?: string
   title: string
   id?: string
+  avatar_url?: string | null
 }
 
 export type Question = {
@@ -64,14 +65,11 @@ function QuestIntroPage() {
     try {
       setLoading(true)
       setError(null)
-
-      // 1. Регистрируем команду на игру
       const regRes = await fetch(`${API_BASE}/api/post_registration`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           game_name: quest.title,
-          // бэк теперь сам создаёт команду, если её нет
           team_name: "Моя команда",
         }),
       })
@@ -87,7 +85,6 @@ function QuestIntroPage() {
         throw new Error("registration_id не вернулся с /api/post_registration")
       }
 
-      // 2. Стартуем игру и получаем сессию + вопросы
       const startRes = await fetch(`${API_BASE}/api/start_game`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,7 +113,6 @@ function QuestIntroPage() {
         registration_id: gs.registration_id,
       }
 
-      // 3. Переходим в QuestFlow с реальными данными с бэка
       navigate(`/quest/${id}/flow`, {
         state: {
           quest,

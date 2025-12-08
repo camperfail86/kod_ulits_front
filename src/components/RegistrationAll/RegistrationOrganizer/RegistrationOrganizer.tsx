@@ -18,12 +18,7 @@ const RegistrationOrganizer = () => {
       if (!password) {
         setError("*Пароль должен содержать хотя бы 1 символ и 1 цифру");
       }
-        // try {
-        //     // await login(email, password) дата рождения, Имя
-        //
-        // } catch (e: any) {
-        //     setError("*Пароль должен содержать хотя бы 1 символ и 1 цифру")
-        // }
+
     }
     return (
         <div>

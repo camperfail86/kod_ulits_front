@@ -32,6 +32,12 @@ function QuestTask({
     onUseHint()
   }
 
+  const imageUrl =
+    question.image_url ||
+    (quest as any).avatar_url ||
+    (quest as any).avatar ||
+    null
+
   return (
     <div className="task-page">
       <div className="task-card">
@@ -40,8 +46,18 @@ function QuestTask({
         </h1>
 
         <div className="task-card__map-main">
-          <div className="task-card__map" />
-          <div className="task-card__map-caption">Локация</div>
+          {/*<div className="task-card__map">*/}
+            {imageUrl ? (
+              <img
+                width={350}
+                height={150}
+                src={imageUrl}
+                alt={question.title || quest.title}
+                className="task-card__map-img"
+              />
+            ) : <div className="task-card__map"/>}
+          {/*</div>*/}
+          <div className="task-card__map-caption"></div>
         </div>
 
         <section className="task-section">

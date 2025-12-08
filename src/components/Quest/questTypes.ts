@@ -6,4 +6,6 @@ export type Quest = {
   difficulty: string
   duration: number
   price: string
+  avatar_url?: string | null
+  avatar?: string | null
 }
